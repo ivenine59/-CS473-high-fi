@@ -1,0 +1,61 @@
+/* src/App.css */
+
+.wrap {
+	width: 100%;
+	margin: 0px auto;
+  border: none;
+	position: relative;
+  display: flex;
+  background-color: gray;
+  justify-content: center; /* 가로 중앙 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+}
+.wrap img {
+	width: 100%;
+	vertical-align: middle;
+  max-width: 70%; /* 이미지의 최대 너비 설정 */
+  max-height: 1000%; /* 이미지의 최대 높이 설정 */
+  filter: brightness(0.5);
+}
+
+.wrap p {
+  color: white;
+	text-align: center;
+	position: absolute;
+  font-size: 30px;
+  font-weight: bold; 
+	top: 50%;
+	left: 50%;
+	transform: translate( -50%, -50% );
+}
+
+.category-buttons {
+  display: flex;
+  flex-direction:  column;
+  justify-content: center; /* 가로 중앙 정렬 */
+  align-items: left; /* 세로 중앙 정렬 */
+  overflow: auto; /* 스크롤을 활성화 */
+}
+
+.button-container {
+  display: flex;
+  flex-wrap: wrap; /* 버튼들을 가로로 나열하고, 너비가 넘칠 경우 넘기기(wrap) 스크롤(nowrap) */
+  justify-content: left;
+}
+
+.category-button {
+  width: 100px; /* 버튼의 너비 설정 */
+  height: 100px; /* 버튼의 높이 설정 */
+  background-color: #333; /* 배경 색상 설정 */
+  color: white;
+  border: none;
+  border-radius: 50%; /* 동그라미 모양으로 설정 */
+  font-size: 20px;
+  cursor: pointer;
+  margin: 15px; /* 버튼 간격 설정 */
+  transition: background-color 0.3s; /* 버튼에 호버 효과를 추가 */
+}
+
+.category-button:hover {
+  background-color: #555; /* 호버 효과 배경 색상 */
+}
