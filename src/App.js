@@ -3,6 +3,7 @@ import './App.css';
 import React, { useState } from 'react';
 import Header from './Header'
 import Auth from './components/Auth';
+import { db } from './firebase'
 
 function App() {
   const categories = ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5', 'Category 6', 'Category 7', 'Category 8', 'Category 9', 'Category 10', 'Category 11', 'Category 12', 'Category 13' ];

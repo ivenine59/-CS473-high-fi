@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { auth } from '../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const Auth = () => {
   const [email, setEmail] = useState('');
@@ -13,12 +14,12 @@ const Auth = () => {
       } catch (error) {
         console.error('회원 가입 실패', error.message);
       }
-    };
+      };
 
   const handleSignIn = async () => {
     try {
-      await auth.signInWithEmailAndPassword(email, password);
-      console.log('로그인 성공');
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log('로그인 성공', userCredential);
     } catch (error) {
       console.error('로그인 실패', error.message);
     }
