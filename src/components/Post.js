@@ -48,45 +48,6 @@ const PostForm = () => {
     }
   };
 
-  const handleComment = async (postId) => {
-    console.log("commenting");
-    try {
-      const user = auth.currentUser; // Get the current user
-      const uid = user ? user.uid : null; // Get the user's uid
-
-      if (!uid) {
-        console.error("User not authenticated");
-        return;
-      }
-
-      const userEmail = user ? user.email : null; // Get the user's email
-
-      if (!userEmail) {
-        console.error("User email not available");
-        return;
-      }
-
-      const commentData ={
-        text: comment,
-        createAt: Date.now(),
-        uid: uid,
-        userEmail: userEmail,
-        // Other comment-related fields
-      };
-
-      const postRef = doc(firestore, "Postings", postId);
-      const commentsRef = collection(postRef, "Comments");
-      await addDoc(commentsRef, commentData);
-
-      setComment(""); // Reset the comment input field
-
-      console.log("댓글이 성공적으로 게시되었습니다.");
-      // Perform necessary actions after comment submission
-    } catch (error) {
-      console.log("댓글 게시 중 오류 발생:", error.message);
-    }
-  };
-
   return (
     <div>
       <h2>새 글 작성</h2>
@@ -102,13 +63,6 @@ const PostForm = () => {
         onChange={(e) => setContent(e.target.value)}
       />
       <button onClick={handlePost}>게시</button>
-      <h2>댓글 작성</h2>
-      <textarea
-        placeholder="댓글 작성"
-        value={comment}
-        onChange={(e) => setComment(e.target.value)}
-      />
-      <button onClick={handleComment("9Xexi7pdlU89MHHH3uIg")}>댓글 작성</button>
     </div>
   );
 };
