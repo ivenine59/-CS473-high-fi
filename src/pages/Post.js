@@ -27,7 +27,7 @@ const PostListItem = ({ id, title, author }) => {
   );
 };
 
-export default function PostList() {
+export default function Post() {
   const posts = [
     { id: 1, title: "Post 1", author: "Author 1" },
     { id: 2, title: "Post 2", author: "Author 2" },
