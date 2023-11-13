@@ -32,7 +32,23 @@ const PostList = () => {
   }, []); // Run the effect only once on mount
 
   useEffect(() => {
-    const fetchComments = async () => {
+    if (selectedPost){
+      const fetchComments = onSnapshot(
+        query(collection(firestore, "Postings", selectedPost.id, "Comments"), orderBy("createAt", "asc")),
+        (snapshot) => {
+          const commentsData = snapshot.docs.map((commentDoc) => ({
+            id: commentDoc.id,
+            ...commentDoc.data(),
+          }));
+          setComments(commentsData);
+        }
+      );
+
+      return () => fetchComments();
+    }
+  }, [selectedPost]);
+    
+/*    async () => {
       if (selectedPost) {
         const postRef = doc(firestore, "Postings", selectedPost.id);
         const commentsRef = query(collection(postRef, "Comments"), orderBy("createAt", "asc"));
@@ -47,6 +63,7 @@ const PostList = () => {
 
     fetchComments();
   }, [selectedPost]);
+  */
 
   const handleSelectPost = (postId) => {
     const selected = postings.find((post) => post.id === postId);
