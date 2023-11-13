@@ -47,23 +47,6 @@ const PostList = () => {
       return () => fetchComments();
     }
   }, [selectedPost]);
-    
-/*    async () => {
-      if (selectedPost) {
-        const postRef = doc(firestore, "Postings", selectedPost.id);
-        const commentsRef = query(collection(postRef, "Comments"), orderBy("createAt", "asc"));
-        const commentsSnapshot = await getDocs(commentsRef);
-        const commentsData = commentsSnapshot.docs.map((commentDoc) => ({
-          id: commentDoc.id,
-          ...commentDoc.data(),
-        }));
-        setComments(commentsData);
-      }
-    };
-
-    fetchComments();
-  }, [selectedPost]);
-  */
 
   const handleSelectPost = (postId) => {
     const selected = postings.find((post) => post.id === postId);
