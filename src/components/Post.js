@@ -1,8 +1,8 @@
 // 예시: PostForm 컴포넌트
 
 import React, { useState } from "react";
-import firebase from "firebase/app";
-import "firebase/firestore";
+import firebase from "firebase/compat/app";
+import "firebase/compat/database"; // for realtime database
 
 const PostForm = () => {
   const [title, setTitle] = useState("");
