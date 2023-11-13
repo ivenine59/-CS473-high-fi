@@ -20,11 +20,19 @@ const PostForm = () => {
         console.error("User not authenticated");
         return;
       }
+      const userEmail = user ? user.email : null; // Get the user's email
+
+      if (!userEmail) {
+        console.error("User email not available");
+        return;
+      }
+
       const docRef = await addDoc(collection(firestore, "Postings"), {
         title: title,
         text: content,
         createAt: Date.now(),
         uid: uid,
+        userEmail: userEmail,
         //여기다가 이것저것 추가하면 될듯
       });
       setContent(docRef);
