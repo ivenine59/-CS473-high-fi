@@ -16,6 +16,7 @@ const PostForm = () => {
       const docRef = await addDoc(collection(firestore, "fweets"), {
         text: content,
         createAt: Date.now(),
+        //여기다가 이것저것 추가하면 될듯
       });
       setContent(docRef);
       console.log("글이 성공적으로 게시되었습니다.");
