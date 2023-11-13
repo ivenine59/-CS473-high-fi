@@ -13,7 +13,7 @@ const PostForm = () => {
   const handlePost = async () => {
     console.log("posting");
     try {
-      const docRef = await addDoc(collection(firestore, "fweets"), {
+      const docRef = await addDoc(collection(firestore, "Postings"), {
         text: content,
         createAt: Date.now(),
         //여기다가 이것저것 추가하면 될듯
