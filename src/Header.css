@@ -1,37 +1,51 @@
 /* Header.css */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #333;
-    color: white;
-    padding: 10px;
-  }
+.navbar {
+  background-color: #ffffff;
+  border-bottom: 1px solid #555555;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px; /* 여백 추가 */
+  height: 100px;
+}
+
+.logo a {
+  color: #000000;
+  font-family: "DM Serif Display-Regular", Helvetica;
+  font-size: 48px;
+  font-weight: 400;
+  text-decoration: none;
   
-  .header button {
-    background-color: transparent;
-    color: white;
-    border: none;
-    cursor: pointer;
-    margin-right: 10px;
-  }
-  
-  .header button:hover {
-    text-decoration: underline;
-  }
-  
-  .header-content {
-    background-color: #f5f5f5;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .header-content p {
-    font-size: 25px;
-  }
-  
-  .header-content img {
-    max-width: 100%;
-    height: auto;
-  }
-  
+}
+
+.menu {
+  display: flex;
+}
+
+.menu a {
+  color: #000000;
+  font-family: "Roboto-Regular", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  margin: 0 50px;
+  text-decoration: none;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.login-button,
+.signup-button {
+  background-color: transparent;
+  color: #000000;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.login-button:hover,
+.signup-button:hover {
+  text-decoration: underline;
+}

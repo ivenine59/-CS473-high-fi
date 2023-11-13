@@ -1,0 +1,280 @@
+.index {
+    align-items: center;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 312px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .index .navbar {
+    background-color: #ffffff;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-color: #555555;
+    height: 100px;
+    position: relative;
+    width: 1920px;
+  }
+  
+  .index .mypage-button {
+    all: unset;
+    background-color: var(--neutralblack);
+    border-radius: 32px;
+    box-sizing: border-box;
+    height: 56px;
+    left: 1619px;
+    position: absolute;
+    top: 21px;
+    width: 140px;
+  }
+  
+  .index .my-page {
+    color: #f1f1f1;
+    font-family: "Roboto-Regular", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    left: 35px;
+    letter-spacing: 0;
+    line-height: 48px;
+    position: absolute;
+    top: 3px;
+    white-space: nowrap;
+  }
+  
+  .index .my-page-wrapper {
+    background-color: #f8f8f8;
+    border: 1px solid;
+    border-color: #000000;
+    border-radius: 32px;
+    height: 56px;
+    left: 1459px;
+    position: absolute;
+    top: 21px;
+    width: 140px;
+  }
+  
+  .index .my-page-2 {
+    color: #3d3d3d;
+    font-family: "Roboto-Regular", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    left: 40px;
+    letter-spacing: 0;
+    line-height: 48px;
+    position: absolute;
+    top: 2px;
+    white-space: nowrap;
+  }
+  
+  .index .text-wrapper-2 {
+    color: #000000;
+    font-family: "DM Serif Display-Regular", Helvetica;
+    font-size: 48px;
+    font-weight: 400;
+    left: 159px;
+    letter-spacing: 0;
+    line-height: 48px;
+    position: absolute;
+    top: 24px;
+    white-space: nowrap;
+  }
+  
+  .index .text-wrapper-3 {
+    color: #000000;
+    font-family: "Roboto-Regular", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    left: 983px;
+    letter-spacing: 0;
+    line-height: 48px;
+    position: absolute;
+    top: 24px;
+    width: 98px;
+  }
+  
+  .index .text-wrapper-4 {
+    color: #000000;
+    font-family: "Roboto-Regular", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    left: 739px;
+    letter-spacing: 0;
+    line-height: 48px;
+    position: absolute;
+    top: 24px;
+    width: 84px;
+  }
+  
+  .index .text-wrapper-5 {
+    color: #000000;
+    font-family: "Roboto-Regular", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    left: 525px;
+    letter-spacing: 0;
+    line-height: 48px;
+    position: absolute;
+    top: 24px;
+    width: 54px;
+  }
+  
+  .index .text-wrapper-6 {
+    color: #000000;
+    font-family: "Roboto-Regular", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    left: 1241px;
+    letter-spacing: 0;
+    line-height: 48px;
+    position: absolute;
+    top: 24px;
+    width: 78px;
+  }
+  
+  .index .login-frame {
+    align-items: center;
+    display: inline-flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 82.03px;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .index .frame {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 15.56px;
+    position: relative;
+  }
+  
+  .index .frame-2 {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 14.14px;
+    position: relative;
+  }
+  
+  .index .email-input-field {
+    height: 54.44px;
+    margin-right: -2px;
+    position: relative;
+    width: 349.07px;
+  }
+  
+  .index .overlap-group {
+    border-radius: 7.88px;
+    height: 54px;
+    position: relative;
+    width: 347px;
+  }
+  
+  .index .input-field-BG {
+    background-color: var(--neutraldgrey);
+    border-radius: 7.88px;
+    height: 54px;
+    left: 0;
+    opacity: 0.2;
+    position: absolute;
+    top: 0;
+    width: 347px;
+  }
+  
+  .index .text-wrapper-7 {
+    color: var(--neutralsilver);
+    font-family: "Inter", Helvetica;
+    font-size: 21.2px;
+    font-weight: 400;
+    left: 16px;
+    letter-spacing: 0;
+    line-height: 19.7px;
+    position: absolute;
+    top: 17px;
+    width: 172px;
+  }
+  
+  .index .text-wrapper-8 {
+    color: var(--neutralsilver);
+    font-family: "Inter", Helvetica;
+    font-size: 21.2px;
+    font-weight: 400;
+    left: 16px;
+    letter-spacing: 0;
+    line-height: 19.7px;
+    position: absolute;
+    top: 15px;
+    width: 172px;
+  }
+  
+  .index .button-primary-normal-default-no {
+    background-color: var(--neutralblack) !important;
+    height: 123.05px !important;
+    width: 205.08px !important;
+  }
+  
+  .index .p {
+    color: var(--neutraldgrey);
+    font-family: "Inter", Helvetica;
+    font-size: 21.2px;
+    font-weight: 400;
+    left: 78px;
+    letter-spacing: 0;
+    line-height: 19.7px;
+    position: absolute;
+    top: 153px;
+    white-space: nowrap;
+  }
+  
+  .index .button-instance {
+    background-color: var(--neutralblack) !important;
+    border-radius: 3.94px !important;
+    gap: 7.88px !important;
+    height: 50.92px !important;
+    padding: 13.78px 31.5px !important;
+  }
+  
+  .index .design-component-instance-node {
+    font-family: var(--body-medium-body-2-font-family) !important;
+    font-size: var(--body-medium-body-2-font-size) !important;
+    font-style: var(--body-medium-body-2-font-style) !important;
+    font-weight: var(--body-medium-body-2-font-weight) !important;
+    letter-spacing: var(--body-medium-body-2-letter-spacing) !important;
+    line-height: var(--body-medium-body-2-line-height) !important;
+    margin-top: -1.31px !important;
+  }
+  
+  .index .instance-16-arrows-directions-right-31 {
+    height: 15.75px !important;
+    position: relative !important;
+    width: 15.75px !important;
+  }
+  
+  .index .bottom-bar {
+    background-color: #ffffff;
+    border-color: #252525;
+    border-top-style: solid;
+    border-top-width: 1px;
+    height: 100px;
+    position: relative;
+    width: 1920px;
+  }
+  
+  .index .HDR-busan-guys-group {
+    color: #000000;
+    font-family: "Roboto-Regular", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    left: 731px;
+    letter-spacing: 0;
+    line-height: 30px;
+    position: absolute;
+    text-align: center;
+    top: 18px;
+    width: 457px;
+  }
+  

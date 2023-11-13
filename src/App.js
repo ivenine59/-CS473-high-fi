@@ -1,37 +1,38 @@
 /* src/App.js */
 import "./App.css";
 import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./Header";
 import Auth from "./components/Auth";
 import PostForm from "./components/Post";
 import PostList from "./components/display_post";
-import RankUpdater from "./components/Rank";
+from "./pages/Home";
+import PostList from "./pages/PostList";
+import PostDetail from "./pages/PostDetail";
+import PostCreate from "./pages/PostCreate";
+import MyPage from "./pages/MyPage";
+import LogIn from "./pages/Login";
+import SignUp from "./pages/SignUp";
+import AboutUs from "./components/AboutUs";
 
 function App() {
-  const categories = [
-    "Category 1",
-    "Category 2",
-    "Category 3",
-    "Category 4",
-    "Category 5",
-    "Category 6",
-    "Category 7",
-    "Category 8",
-    "Category 9",
-    "Category 10",
-    "Category 11",
-    "Category 12",
-    "Category 13",
-  ];
-
   return (
-    <div className="App">
-      <Header />
-      <div className="wrap">
-        <img src={process.env.PUBLIC_URL + "/hdr-image.jpg"} />
-        <p>We are HDR who pursue healthy discussion</p>
+    <Router>
+      <div className="App">
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/post" element={<PostList />} />
+          <Route path="/postdetail" element={<PostDetail />} />
+          <Route path="/postcreate" element={<PostCreate />} />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/login" element={<LogIn />} />
+          <Route path="/signup" element={<SignUp />} />
+        </Routes>
       </div>
-      <div className="category-buttons">
+
+      {/* <div className="category-buttons">
         <p style={{ color: "black", fontSize: "25px" }}>
           Here are categories you can find
         </p>
@@ -49,20 +50,19 @@ function App() {
       </div>
       <div>
         <h1>글쓰기 기능 파트</h1>
-        {/* 다른 컴포넌트들 */}
         <PostForm />
       </div>
       <div>
         <h1>display 기능 파트</h1>
-        {/* 다른 컴포넌트들 */}
         <PostList />
       </div>
       <div>
         <h1>display 기능 파트</h1>
-        {/* 다른 컴포넌트들 */}
         <RankUpdater />
-      </div>
-    </div>
+      </div> */}
+
+
+    </Router>
   );
 }
 
