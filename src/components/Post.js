@@ -9,7 +9,6 @@ import { firestore, auth } from "../firebase";
 const PostForm = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [comment, setComment] = useState("");
 
   const handlePost = async () => {
     console.log("posting");
