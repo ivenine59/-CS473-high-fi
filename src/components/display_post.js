@@ -6,6 +6,7 @@ import {
   orderBy,
   doc,
   addDoc,
+  getDocs,
 } from "firebase/firestore";
 import { firestore, auth } from "../firebase";
 
@@ -13,6 +14,7 @@ const PostList = () => {
   const [postings, setPostings] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
   const [comment, setComment] = useState("");
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
@@ -28,6 +30,23 @@ const PostList = () => {
 
     return () => unsubscribe();
   }, []); // Run the effect only once on mount
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      if (selectedPost) {
+        const postRef = doc(firestore, "Postings", selectedPost.id);
+        const commentsRef = collection(postRef, "Comments");
+        const commentsSnapshot = await getDocs(commentsRef);
+        const commentsData = commentsSnapshot.docs.map((commentDoc) => ({
+          id: commentDoc.id,
+          ...commentDoc.data(),
+        }));
+        setComments(commentsData);
+      }
+    };
+
+    fetchComments();
+  }, [selectedPost]);
 
   const handleSelectPost = (postId) => {
     const selected = postings.find((post) => post.id === postId);
@@ -86,7 +105,6 @@ const PostList = () => {
             <strong>CreatedAt:</strong> {post.createAt}
             <br />
             <button onClick={() => handleSelectPost(post.id)}>Select</button>
-            {/* Add other fields as needed */}
           </li>
         ))}
       </ul>
@@ -119,7 +137,17 @@ const PostList = () => {
             댓글 작성
           </button>
 
-          {/* Add other fields as needed */}
+          <h2>댓글 목록</h2>
+          <ul>
+            {comments.map((comment) => (
+              <li key={comment.id}>
+                <strong>ID:</strong> {comment.id} <br />
+                <strong>User ID:</strong> {comment.userEmail} <br />
+                <strong>Text:</strong> {comment.text} <br />
+                <strong>CreatedAt:</strong> {comment.createAt} <br />
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </div>
