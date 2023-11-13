@@ -3,22 +3,21 @@
 import React, { useState } from "react";
 import firebase from "firebase/compat/app";
 import "firebase/compat/database"; // for realtime database
+import { collection, addDoc } from "firebase/firestore"; // Import Firestore functions
+import { firestore } from "../firebase";
 
 const PostForm = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
   const handlePost = async () => {
+    console.log("posting");
     try {
-      const db = firebase.firestore();
-      const postsRef = db.collection("posts");
-
-      await postsRef.add({
-        title,
-        content,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      const docRef = await addDoc(collection(firestore, "fweets"), {
+        text: content,
+        createAt: Date.now(),
       });
-
+      setContent(docRef);
       console.log("글이 성공적으로 게시되었습니다.");
       // 게시 후 필요한 동작을 수행하세요.
 
@@ -26,7 +25,7 @@ const PostForm = () => {
       setTitle("");
       setContent("");
     } catch (error) {
-      console.error("글 게시 중 오류 발생:", error.message);
+      console.log("글 게시 중 오류 발생:", error.message);
     }
   };
 
