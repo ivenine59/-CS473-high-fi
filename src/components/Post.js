@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import firebase from "firebase/compat/app";
 import "firebase/compat/database"; // for realtime database
 import { collection, addDoc } from "firebase/firestore"; // Import Firestore functions
-import { firestore } from "../firebase";
+import { firestore, auth } from "../firebase";
 
 const PostForm = () => {
   const [title, setTitle] = useState("");
@@ -13,9 +13,18 @@ const PostForm = () => {
   const handlePost = async () => {
     console.log("posting");
     try {
+      const user = auth.currentUser; // Get the current user
+      const uid = user ? user.uid : null; // Get the user's uid
+
+      if (!uid) {
+        console.error("User not authenticated");
+        return;
+      }
       const docRef = await addDoc(collection(firestore, "Postings"), {
+        title: title,
         text: content,
         createAt: Date.now(),
+        uid: uid,
         //여기다가 이것저것 추가하면 될듯
       });
       setContent(docRef);

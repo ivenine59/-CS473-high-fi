@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Header from "./Header";
 import Auth from "./components/Auth";
 import PostForm from "./components/Post";
+import PostList from "./components/display_post";
 
 function App() {
   const categories = [
@@ -49,6 +50,11 @@ function App() {
         <h1>글쓰기 기능 파트</h1>
         {/* 다른 컴포넌트들 */}
         <PostForm />
+      </div>
+      <div>
+        <h1>display 기능 파트</h1>
+        {/* 다른 컴포넌트들 */}
+        <PostList />
       </div>
     </div>
   );
