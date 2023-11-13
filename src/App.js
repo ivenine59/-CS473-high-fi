@@ -3,7 +3,7 @@ import "./App.css";
 import React, { useState } from "react";
 import Header from "./Header";
 import Auth from "./components/Auth";
-import { db } from "./firebase";
+import PostForm from "./components/Post";
 
 function App() {
   const categories = [
@@ -44,6 +44,11 @@ function App() {
       <div>
         <h1>로그인 및 회원 가입 파트</h1>
         <Auth />
+      </div>
+      <div>
+        <h1>글쓰기 기능 파트</h1>
+        {/* 다른 컴포넌트들 */}
+        <PostForm />
       </div>
     </div>
   );
