@@ -12,6 +12,9 @@ import { Navigate, useNavigate } from 'react-router';
 import { useState } from 'react';
 import { auth } from '../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, collection, addDoc } from "firebase/firestore"; // Import Firestore functions
+import { firestore } from '../firebase';
+
 
 
 
@@ -49,6 +52,18 @@ const handleSignUp = async () => {
       email,
       password
     );
+    const docRef = await addDoc(collection(firestore, "Accounts"), {
+      userEmail: email,
+      sum_rating: 0,
+      num_rating: 0,
+      received_sum_rating: 0,
+      received_num_rating: 0,
+      point: 0,
+      rank: 0,
+      percent_rank: 0,
+      rank2: 0,
+      percent_rank2: 0,
+    });
     console.log("회원 가입 성공", userCredential);
     alert("회원가입이 완료되었습니다.");
     navigate("/login");
