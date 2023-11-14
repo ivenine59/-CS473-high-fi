@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from "react";
-import {
-  collection,
-  onSnapshot,
-  query,
-  orderBy,
-  doc,
-  addDoc,
-  getDocs,
-} from "firebase/firestore";
+import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import { firestore, auth } from "../firebase";
+import { fetchComments, postComment, postRating } from "./comment"; // Import comment-related functions
 
 const PostList = () => {
   const [postings, setPostings] = useState([]);
@@ -34,21 +27,8 @@ const PostList = () => {
 
   useEffect(() => {
     if (selectedPost) {
-      const fetchComments = onSnapshot(
-        query(
-          collection(firestore, "Postings", selectedPost.id, "Comments"),
-          orderBy("createAt", "asc")
-        ),
-        (snapshot) => {
-          const commentsData = snapshot.docs.map((commentDoc) => ({
-            id: commentDoc.id,
-            ...commentDoc.data(),
-          }));
-          setComments(commentsData);
-        }
-      );
-
-      return () => fetchComments();
+      const unsubscribe = fetchComments(selectedPost.id, setComments);
+      return () => unsubscribe();
     }
   }, [selectedPost]);
 
@@ -59,72 +39,13 @@ const PostList = () => {
 
   const handleComment = async (postId) => {
     console.log("commenting");
-    try {
-      const user = auth.currentUser; // Get the current user
-      const uid = user ? user.uid : null; // Get the user's uid
-
-      if (!uid) {
-        console.error("User not authenticated");
-        return;
-      }
-
-      const userEmail = user ? user.email : null; // Get the user's email
-
-      if (!userEmail) {
-        console.error("User email not available");
-        return;
-      }
-
-      const commentData = {
-        text: comment,
-        createAt: Date.now(),
-        uid: uid,
-        userEmail: userEmail,
-        // Other comment-related fields
-      };
-
-      const postRef = doc(firestore, "Postings", postId);
-      const commentsRef = collection(postRef, "Comments");
-      await addDoc(commentsRef, commentData);
-
-      setComment(""); // Reset the comment input field
-
-      console.log("댓글이 성공적으로 게시되었습니다.");
-      // Perform necessary actions after comment submission
-    } catch (error) {
-      console.log("댓글 게시 중 오류 발생:", error.message);
-    }
+    await postComment(postId, comment);
+    setComment(""); // Reset the comment input field
   };
 
   const handleRatingClick = async (postId, commentId, rating) => {
     console.log("rating");
-    try {
-      const user = auth.currentUser; // Get the current user
-      const uid = user ? user.uid : null; // Get the user's uid
-
-      if (!uid) {
-        console.error("User not authenticated");
-        return;
-      }
-
-      const RatingData = {
-        commentId: commentId,
-        createAt: Date.now(),
-        uid: uid,
-        rating: rating,
-        // Other comment-related fields
-      };
-
-      const postRef = doc(firestore, "Postings", postId);
-      const commentsRef = doc(postRef, "Comments", commentId);
-      const ratingsRef = collection(commentsRef, "ratings");
-      await addDoc(ratingsRef, RatingData);
-
-      console.log("별점이 성공적으로 게시되었습니다.");
-      // Perform necessary actions after comment submission
-    } catch (error) {
-      console.log("별점 게시 중 오류 발생:", error.message);
-    }
+    await postRating(postId, commentId, rating);
     setSelectedRating(rating);
   };
 
