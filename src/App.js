@@ -5,6 +5,7 @@ import Header from "./Header";
 import Auth from "./components/Auth";
 import PostForm from "./components/Post";
 import PostList from "./components/display_post";
+import RankUpdater from "./components/Rank";
 
 function App() {
   const categories = [
@@ -55,6 +56,11 @@ function App() {
         <h1>display 기능 파트</h1>
         {/* 다른 컴포넌트들 */}
         <PostList />
+      </div>
+      <div>
+        <h1>display 기능 파트</h1>
+        {/* 다른 컴포넌트들 */}
+        <RankUpdater />
       </div>
     </div>
   );
