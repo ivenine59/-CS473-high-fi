@@ -151,7 +151,7 @@ export default function PostDetail() {
   };
 
   //댓글 달기 함수
-  const handleCommentSubmit = async (postId, comment) => {
+  const handleCommentSubmit = async () => {
     try {
       const commentData = {
         text: comment,
@@ -160,7 +160,7 @@ export default function PostDetail() {
         userEmail: loggedInEmail,
       };
 
-      console.log(state.id)
+      console.log(state.id, commentData)
   
       const postRef = doc(firestore, "Postings", state.id);
       console.log(postRef);
@@ -169,9 +169,8 @@ export default function PostDetail() {
       await addDoc(commentsRef, commentData);
   
       console.log("댓글이 성공적으로 게시되었습니다.");
-      alert("댓글이 작성되었습니다.")
       fetchComments(state.id, setComments);
-      // setComment("");
+      setComment("");
     } catch (error) {
       console.log("댓글 게시 중 오류 발생:", error.message);
     }
