@@ -19,6 +19,8 @@ const Auth = () => {
         userEmail: email,
         sum_rating: 0,
         num_rating: 0,
+        received_sum_rating: 0,
+        received_num_rating: 0,
       });
 
       console.log("회원 가입 성공", userCredential);

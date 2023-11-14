@@ -2,6 +2,7 @@
 import {
   addDoc,
   updateDoc,
+  getDoc,
   getDocs,
   collection,
   doc,
@@ -118,13 +119,17 @@ export const postRating = async (postId, commentId, rating) => {
     const accountRef = collection(firestore, "Accounts");
     const accountQuery = query(accountRef, where("userEmail", "==", userEmail));
     const accountSnapshot = await getDocs(accountQuery);
+    const authordoc = await getDoc(commentsRef);
+    const authordata = authordoc.data();
+    const receiverQuery = query(accountRef, where("userEmail", "==", authordata.userEmail));
+    const receiverSnapshot = await getDocs(receiverQuery);
 
     if (!accountSnapshot.docs.empty) {
       const accountDoc = accountSnapshot.docs[0];
       const accountData = accountDoc.data();
 
-      const currentRating = accountData.sum_rating || 0;
-      const numRating = accountData.num_rating || 0;
+      const currentRating = accountData.sum_rating;
+      const numRating = accountData.num_rating;
       const extraRating = rating;
 
       const accountDocRef = doc(accountRef, accountDoc.id);
@@ -134,6 +139,25 @@ export const postRating = async (postId, commentId, rating) => {
       });
 
       console.log("Rating 업데이트 성공");
+    } else {
+      console.error("해당 이메일을 가진 사용자가 없습니다.");
+    }
+
+    if (!receiverSnapshot.docs.empty) {
+      const receiverDoc = receiverSnapshot.docs[0];
+      const receiverData = receiverDoc.data();
+
+      const re_currentRating = receiverData.received_sum_rating;
+      const re_numRating = receiverData.received_num_rating;
+      const re_extraRating = rating;
+
+      const receiverDocRef = doc(accountRef, receiverDoc.id);
+      await updateDoc(receiverDocRef, {
+        received_sum_rating: re_currentRating + re_extraRating - originalRating,
+        received_num_rating: re_numRating + 1 - existingFlag,
+      });
+
+      console.log("Rating receiver 업데이트 성공");
     } else {
       console.error("해당 이메일을 가진 사용자가 없습니다.");
     }
