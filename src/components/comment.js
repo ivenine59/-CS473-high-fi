@@ -104,6 +104,8 @@ export const postRating = async (postId, commentId, rating) => {
 
     let originalRating = 0;
     let existingFlag = 0;
+    let avgRating = 3;
+
     if (!ExistingRatingSnapshot.empty) {
       const existingRatingDoc = ExistingRatingSnapshot.docs[0];
       const existingRatingData = existingRatingDoc.data();
@@ -146,7 +148,6 @@ export const postRating = async (postId, commentId, rating) => {
     if (!receiverSnapshot.docs.empty) {
       const receiverDoc = receiverSnapshot.docs[0];
       const receiverData = receiverDoc.data();
-
       const re_currentRating = receiverData.received_sum_rating;
       const re_numRating = receiverData.received_num_rating;
       const re_extraRating = rating;
