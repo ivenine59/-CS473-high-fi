@@ -123,7 +123,10 @@ export const postRating = async (postId, commentId, rating) => {
     const accountSnapshot = await getDocs(accountQuery);
     const authordoc = await getDoc(commentsRef);
     const authordata = authordoc.data();
-    const receiverQuery = query(accountRef, where("userEmail", "==", authordata.userEmail));
+    const receiverQuery = query(
+      accountRef,
+      where("userEmail", "==", authordata.userEmail)
+    );
     const receiverSnapshot = await getDocs(receiverQuery);
 
     if (!accountSnapshot.docs.empty) {
@@ -138,11 +141,13 @@ export const postRating = async (postId, commentId, rating) => {
         sum_rating: currentRating + extraRating - originalRating,
         num_rating: numRating + 1 - existingFlag,
       });
-
-      if (existingFlag === 1){
-        avgRating = (currentRating - originalRating) / (numRating - 1)
+      if (numRating !== 0) {
+        if (existingFlag === 1) {
+          avgRating = (currentRating - originalRating) / (numRating - 1);
+        } else {
+          avgRating = currentRating / numRating;
+        }
       }
-
       console.log("Rating 업데이트 성공");
     } else {
       console.error("해당 이메일을 가진 사용자가 없습니다.");
@@ -157,7 +162,11 @@ export const postRating = async (postId, commentId, rating) => {
 
       const receiverDocRef = doc(accountRef, receiverDoc.id);
       await updateDoc(receiverDocRef, {
-        received_sum_rating: re_currentRating + (1 - existingFlag)*(3 - avgRating) + re_extraRating - originalRating,
+        received_sum_rating:
+          re_currentRating +
+          (1 - existingFlag) * (3.0 - avgRating) +
+          re_extraRating -
+          originalRating,
         received_num_rating: re_numRating + 1 - existingFlag,
       });
 
