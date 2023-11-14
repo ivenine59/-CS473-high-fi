@@ -5,6 +5,7 @@ import "firebase/compat/database"; // for realtime database
 import { doc, collection, addDoc } from "firebase/firestore"; // Import Firestore functions
 import { firestore, auth } from "../firebase";
 
+
 const PostForm = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");

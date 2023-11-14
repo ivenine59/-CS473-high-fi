@@ -6,6 +6,7 @@ import { theme } from "./buttonTheme";
 import { useEffect, useState } from "react";
 import { collection, onSnapshot, query, orderBy,} from "firebase/firestore";
 import { firestore } from "../firebase";
+import { useAuth } from "../AuthContext";
 
 
 
@@ -19,6 +20,8 @@ export default function Post() {
   let navigate = useNavigate();
 
   const [postings, setPostings] = useState([]);
+  const { loggedInUser, loggedInEmail } = useAuth();
+
   
   useEffect(() => {
     const unsubscribe = onSnapshot(
@@ -68,7 +71,12 @@ export default function Post() {
   
 
   const handleCreatePost = () => {
-    navigate("/postcreate"); // Assuming "/postcreation" is the route for creating a new post
+    if(loggedInEmail==null){
+      alert("로그인 하지 않으면 글을 작성할 수 없습니다.")
+    }else{
+      navigate("/postcreate"); // Assuming "/postcreation" is the route for creating a new post
+
+    }
   };
 
   return (

@@ -33,23 +33,27 @@ export default function PostCreate() {
   };
 
   const handlePostSubmit = async () => {
-    try {
-      await addDoc(collection(firestore, "Postings"), {
-        title: postTitle,
-        text: postContent,
-        createAt: Date.now(),
-        uid: loggedInUser,
-        userEmail: loggedInEmail,
-        //여기다가 이것저것 추가하면 될듯
-      });
-      setPostTitle(""); // Clear the title input after submission
-      setPostContent(""); // Clear the content input after submission
-      alert("글 작성에 성공하였습니다.")
-      navigate("/post");
-    } catch (error) {
-      alert("로그인에 실패했습니다. 이메일이나 비밀번호를 확인해주세요.");
+    if(loggedInUser!=null){
+      try {
+        await addDoc(collection(firestore, "Postings"), {
+          title: postTitle,
+          text: postContent,
+          createAt: Date.now(),
+          uid: loggedInUser,
+          userEmail: loggedInEmail,
+          //여기다가 이것저것 추가하면 될듯
+        });
+        setPostTitle(""); // Clear the title input after submission
+        setPostContent(""); // Clear the content input after submission
+        alert("글 작성에 성공하였습니다.")
+        navigate("/post");
+      } catch (error) {
+        alert("로그인에 실패했습니다. 이메일이나 비밀번호를 확인해주세요.");
+      }
+    }else{
+      alert("로그인하지 않으면 글을 적을 수 없습니다.")
     }
-  };
+  }
 
   return (
     <div style={{ padding: 14, maxWidth: 1000, margin: "0 auto" }}>
