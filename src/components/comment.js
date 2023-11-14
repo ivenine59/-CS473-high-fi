@@ -1,11 +1,14 @@
 // comment.js
 import {
   addDoc,
+  updateDoc,
+  getDocs,
   collection,
   doc,
   onSnapshot,
   orderBy,
   query,
+  where,
 } from "firebase/firestore";
 import { auth, firestore } from "../firebase";
 
@@ -72,6 +75,7 @@ export const postRating = async (postId, commentId, rating) => {
     }
 
     const RatingData = {
+      postId: postId,
       commentId: commentId,
       uid: uid,
       rating: rating,
@@ -81,9 +85,21 @@ export const postRating = async (postId, commentId, rating) => {
     const postRef = doc(firestore, "Postings", postId);
     const commentsRef = doc(postRef, "Comments", commentId);
     const ratingsRef = collection(commentsRef, "ratings");
-    await addDoc(ratingsRef, RatingData);
 
-    console.log("별점이 성공적으로 게시되었습니다.");
+    const ExistingRatingQuery = query(ratingsRef, where("uid", "==", uid), where("postId", "==", postId));
+    const ExistingRatingSnapshot = await getDocs(ExistingRatingQuery);
+
+    if (!ExistingRatingSnapshot.empty){
+      const existingRatingDoc = ExistingRatingSnapshot.docs[0];
+      await updateDoc(existingRatingDoc.ref, RatingData);
+      console.log("별점이 성공적으로 업데이트되었습니다.");
+
+    } else{
+      await addDoc(ratingsRef, RatingData);
+      console.log("별점이 성공적으로 게시되었습니다.");
+    }
+
+
     // Perform necessary actions after comment submission
   } catch (error) {
     console.log("별점 게시 중 오류 발생:", error.message);

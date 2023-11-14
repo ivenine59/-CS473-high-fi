@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
+import { collection, onSnapshot, query, orderBy,} from "firebase/firestore";
 import { firestore, auth } from "../firebase";
 import { fetchComments, postComment, postRating } from "./comment"; // Import comment-related functions
 
@@ -9,6 +9,7 @@ const PostList = () => {
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [selectedRating, setSelectedRating] = useState(0);
+  const [userRatings, setUserRatings] = useState([]);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
@@ -45,8 +46,29 @@ const PostList = () => {
 
   const handleRatingClick = async (postId, commentId, rating) => {
     console.log("rating");
+    const existingRatingIndex = userRatings.findIndex(
+      (userRating) => userRating.postId === postId && userRating.commentId === commentId
+    );
+
+    if (existingRatingIndex !== -1) {
+      // If the user has already rated, update the existing rating
+      const updatedRatings = [...userRatings];
+      updatedRatings[existingRatingIndex] = { postId, commentId, rating };
+      setUserRatings(updatedRatings);
+    } else {
+      // If the user hasn't rated, add a new rating
+      setUserRatings((prevRatings) => [
+        ...prevRatings,
+        { postId, commentId, rating },
+      ]);
+    }
+  
+    // Update the selected rating state
+    setSelectedRating({ postId, commentId, rating });
+  
+    // Update the rating in the database
     await postRating(postId, commentId, rating);
-    setSelectedRating(rating);
+  
   };
 
   return (
@@ -110,7 +132,13 @@ const PostList = () => {
                     }
                     style={{
                       backgroundColor:
-                        rating <= selectedRating ? "yellow" : "white",
+                        (rating === selectedRating?.rating &&
+                        comment.id === selectedRating?.commentId)||
+                        userRatings.some((userRating) =>
+                        userRating.commentId === comment.id &&
+                        userRating.rating === rating
+                        )
+                        ? "yellow" : "white",
                     }}
                   >
                     {rating}
