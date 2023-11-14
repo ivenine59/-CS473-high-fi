@@ -129,16 +129,19 @@ export const postRating = async (postId, commentId, rating) => {
     if (!accountSnapshot.docs.empty) {
       const accountDoc = accountSnapshot.docs[0];
       const accountData = accountDoc.data();
-
       const currentRating = accountData.sum_rating;
       const numRating = accountData.num_rating;
       const extraRating = rating;
-
       const accountDocRef = doc(accountRef, accountDoc.id);
+
       await updateDoc(accountDocRef, {
         sum_rating: currentRating + extraRating - originalRating,
         num_rating: numRating + 1 - existingFlag,
       });
+
+      if (existingFlag === 1){
+        avgRating = (currentRating - originalRating) / (numRating - 1)
+      }
 
       console.log("Rating 업데이트 성공");
     } else {
@@ -154,7 +157,7 @@ export const postRating = async (postId, commentId, rating) => {
 
       const receiverDocRef = doc(accountRef, receiverDoc.id);
       await updateDoc(receiverDocRef, {
-        received_sum_rating: re_currentRating + re_extraRating - originalRating,
+        received_sum_rating: re_currentRating + (1 - existingFlag)*(3 - avgRating) + re_extraRating - originalRating,
         received_num_rating: re_numRating + 1 - existingFlag,
       });
 
