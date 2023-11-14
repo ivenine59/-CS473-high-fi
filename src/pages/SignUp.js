@@ -3,10 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
@@ -14,6 +10,9 @@ import Container from '@mui/material/Container';
 import { alpha, createTheme, getContrastRatio, ThemeProvider } from '@mui/material/styles';
 import { Navigate, useNavigate } from 'react-router';
 import { useState } from 'react';
+import { auth } from '../firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+
 
 
 
@@ -43,10 +42,21 @@ export default function SignUp() {
 const [email,setEmail] = useState("");
 const [password,setPassword] = useState("");
 
-const trySignUp = () => {
-    console.log(email + "  " +password);
-    //회원가입 시도 함수
-}
+const handleSignUp = async () => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    console.log("회원 가입 성공", userCredential);
+    alert("회원가입이 완료되었습니다.");
+    navigate("/login");
+  } catch (error) {
+    console.error("회원 가입 실패", error.message);
+    alert("회원가입에 실패하였습니다.");
+  }
+};
 
   let navigate = useNavigate();
 
@@ -90,6 +100,7 @@ const trySignUp = () => {
               id="password"
               autoComplete="current-password"
               onChange={(event)=>setPassword(event.target.value)}
+              placeholder='Password should be more than 6 characters'
             />
 
             <Button
@@ -98,7 +109,7 @@ const trySignUp = () => {
               variant="contained"
               sx={{ mt: 1, mb: 1 }}
               color="black"
-              onClick={()=>trySignUp()}
+              onClick={()=>handleSignUp()}
             >
             Sign Up
             </Button>

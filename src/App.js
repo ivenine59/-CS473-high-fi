@@ -14,23 +14,26 @@ import MyPage from "./pages/MyPage";
 import LogIn from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import AboutUs from "./components/AboutUs";
+import { AuthProvider } from "./AuthContext";
 
 function App() {
   return (
     <Router>
-      <div className="App">
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/post" element={<Post/>} />
-          <Route path="/postdetail" element={<PostDetail />} />
-          <Route path="/postcreate" element={<PostCreate />} />
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/login" element={<LogIn />} />
-          <Route path="/signup" element={<SignUp />} />
-        </Routes>
-      </div>
+      <AuthProvider>
+        <div className="App">
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/post" element={<Post />} />
+            <Route path="/postdetail" element={<PostDetail />} />
+            <Route path="/postcreate" element={<PostCreate />} />
+            <Route path="/mypage" element={<MyPage />} />
+            <Route path="/login" element={<LogIn />} />
+            <Route path="/signup" element={<SignUp />} />
+          </Routes>
+        </div>
+      </AuthProvider>
       {/* <div className="category-buttons">
         <p style={{ color: "black", fontSize: "25px" }}>
           Here are categories you can find

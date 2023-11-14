@@ -2,9 +2,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
+import { useAuth } from './AuthContext';
 
 
 function Header() {
+  const { loggedInUser, loggedInEmail, logout } = useAuth();
   return (
     <div className="navbar">
       <div className="logo"><Link to="/">HDR</Link></div>
@@ -15,12 +17,19 @@ function Header() {
         <Link to="/mypage">My Page</Link>
       </div>
       <div className="auth-buttons">
-        <Link to="/login">
-          <button className="login-button">Log In</button>
-        </Link>
+        {loggedInUser && loggedInEmail
+        ?<>
+        <button className="invisible-button">Sign Up</button>
+        <button className="signup-button" onClick={()=> logout()}>Log Out</button>
+        </>
+      :<>
         <Link to="/signup">
           <button className="signup-button">Sign Up</button>
         </Link>
+        <Link to="/login">
+          <button className="login-button">Log In</button>
+        </Link>
+      </>}
       </div>
     </div>
   );
