@@ -1,7 +1,6 @@
 // 예시: PostForm 컴포넌트
 
 import React, { useState } from "react";
-import firebase from "firebase/compat/app";
 import "firebase/compat/database"; // for realtime database
 import { doc, collection, addDoc } from "firebase/firestore"; // Import Firestore functions
 import { firestore, auth } from "../firebase";

@@ -16,7 +16,7 @@ const Auth = () => {
         password
       );
       const docRef = await addDoc(collection(firestore, "Accounts"), {
-        text: email,
+        userEmail: email,
         sum_rating: 0,
         num_rating: 0,
       });
