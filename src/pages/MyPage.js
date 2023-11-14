@@ -51,8 +51,8 @@ const MyPage = () => {
           </Button>
         </ThemeProvider>
       </div>
-      <h2 style={{ fontSize: 20, marginBottom: 10 }}>My Posts</h2>
-      {userData.posts.map((post) => (
+      {/* <h2 style={{ fontSize: 20, marginBottom: 10 }}>My Posts</h2> */}
+      {/* {userData.posts.map((post) => (
         <Paper
           key={post.id}
           style={{ padding: "20px 20px", marginTop: 10, marginBottom: 20 }}
@@ -72,7 +72,7 @@ const MyPage = () => {
             Commented on Post {comment.postId}, {comment.timestamp}
           </p>
         </Paper>
-      ))}
+      ))} */}
     </div>
   );
 };

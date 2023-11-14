@@ -8,10 +8,7 @@ import {
 } from "firebase/firestore";
 import { firestore } from "../firebase";
 
-const RankUpdater = () => {
-  const [updateStatus, setUpdateStatus] = useState(""); // 업데이트 상태를 나타내는 상태
-
-  const handleUpdateFirestore = async () => {
+const RankUpdater = async () => {
     try {
       const querySnapshot = await getDocs(collection(firestore, "Accounts"));
 
@@ -81,24 +78,16 @@ const RankUpdater = () => {
           });
 
           console.log(`Document ${doc.id}: Rank2 successfully updated!`);
+
         } catch (e) {
           console.error(`Error updating document ${doc.id}: `, e);
         }
       });
-
-      setUpdateStatus("All documents updated!");
+      alert("업데이트 완료")
     } catch (error) {
       console.error("Error updating documents: ", error);
-      setUpdateStatus("Error updating documents. Check console for details.");
     }
   };
 
-  return (
-    <div>
-      <button onClick={handleUpdateFirestore}>Update Firestore</button>
-      <p>{updateStatus}</p>
-    </div>
-  );
-};
 
 export default RankUpdater;

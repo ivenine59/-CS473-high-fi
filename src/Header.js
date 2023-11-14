@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import './Header.css';
 import { useAuth } from './AuthContext';
 import RankUpdater from './components/Rank';
+import { useEffect, useState } from 'react';
 
 
 function Header() {
@@ -22,7 +23,7 @@ function Header() {
         ?<>
         {loggedInEmail !="admin@naver.com"
         ?<button className="invisible-button">Sign Up</button>
-        :<button className="signup-button" onClick={()=>RankUpdater()}>Update</button>}
+        :<button className="signup-button" onClick={()=>{RankUpdater();}}>Update</button>}
         <button className="signup-button" onClick={()=> logout()}>Log Out</button>
         </>
       :<>
