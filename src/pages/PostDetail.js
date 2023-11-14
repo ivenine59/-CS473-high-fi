@@ -20,6 +20,7 @@ import { fetchComments } from "../components/comment";
 import { useAuth } from "../AuthContext";
 import { addDoc, collection, doc } from "firebase/firestore";
 import { firestore } from "../firebase";
+import { postRate } from "../components/comment";
 
 
 const formatCreatedAt = (createdAt) => {
@@ -30,7 +31,7 @@ const formatCreatedAt = (createdAt) => {
 
 
 
-const CommentCard = ({ comment }) => {
+const CommentCard = ({ comment, postId, uid, userEmail }) => {
   const [isRatingOpen, setIsRatingOpen] = useState(false);
   const [tempRating, setTempRating] = useState(0);
 
@@ -44,13 +45,20 @@ const CommentCard = ({ comment }) => {
 
   const handleRatingChange = (event, value) => {
     setTempRating(value);
+    console.log(value);
   };
 
   const handleRatingSubmit = () => {
     // Add logic to handle the submitted rating
     // For example, update the comment's rating in the state
     // and close the rating popover
-    setIsRatingOpen(false);
+    try {
+      postRate(postId, comment.id, uid, userEmail, tempRating );
+      setIsRatingOpen(false);
+      setTempRating(0);
+    } catch (error) {
+      alert("점수를 주는데 실패하였습니다.");
+    }
   };
 
   const handleRatingCancel = () => {
@@ -201,14 +209,14 @@ export default function PostDetail() {
             </h1>
           </Grid>
           <Grid item>
-            <Button
+            {/* <Button
               onClick={handleDelete}
               variant="contained"
               color="error"
               style={{ marginRight: 10 }}
             >
               <DeleteIcon />
-            </Button>
+            </Button> */}
             <Button onClick={handleBack} variant="contained" color="primary">
               <ArrowBackIcon />
             </Button>
@@ -221,7 +229,7 @@ export default function PostDetail() {
       <h1 style={{ fontSize: 20, marginBottom: 10 }}>Comments</h1>{" "}
       {/* 폰트 크기 조절 및 마진 추가 */}
       {comments.map((comment) => (
-        <CommentCard key={comment.id} comment={comment} />
+        <CommentCard key={comment.id} comment={comment} postId={state.id} uid={loggedInUser} userEmail={loggedInEmail}/>
       ))}
       {/*댓글 작성 영역*/}
       <ThemeProvider theme={theme}>
