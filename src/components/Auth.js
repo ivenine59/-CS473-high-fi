@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { auth } from "../firebase";
+import { auth, firestore } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, collection, addDoc } from "firebase/firestore"; // Import Firestore functions
 
 const Auth = () => {
   const [email, setEmail] = useState("");
@@ -14,6 +15,12 @@ const Auth = () => {
         email,
         password
       );
+      const docRef = await addDoc(collection(firestore, "Accounts"), {
+        text: email,
+        sum_rating: 0,
+        num_rating: 0,
+      });
+
       console.log("회원 가입 성공", userCredential);
     } catch (error) {
       console.error("회원 가입 실패", error.message);
