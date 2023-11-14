@@ -3,11 +3,22 @@ import { Paper, TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from "./buttonTheme";
+import { useAuth } from "../AuthContext";
+import { useEffect } from "react";
+import { firestore } from "../firebase";
+import { addDoc, collection } from "firebase/firestore";
 
 export default function PostCreate() {
   const navigate = useNavigate();
+  const { loggedInUser, loggedInEmail } = useAuth();
   const [postTitle, setPostTitle] = useState("");
   const [postContent, setPostContent] = useState("");
+
+  useEffect(() => {
+    if((loggedInUser && loggedInEmail)== null){
+      navigate("/post");
+    }
+  }, []);
 
   const handleTitleChange = (event) => {
     setPostTitle(event.target.value);
@@ -21,14 +32,23 @@ export default function PostCreate() {
     navigate("/post"); // Redirect to the post list or another page
   };
 
-  const handlePostSubmit = (event) => {
-    event.preventDefault();
-    // Add logic to handle the submitted post title and content, e.g., send to server
-    console.log("Submitted post title:", postTitle);
-    console.log("Submitted post content:", postContent);
-    setPostTitle(""); // Clear the title input after submission
-    setPostContent(""); // Clear the content input after submission
-    navigate("/post"); // Redirect to the post list or another page
+  const handlePostSubmit = async () => {
+    try {
+      await addDoc(collection(firestore, "Postings"), {
+        title: postTitle,
+        text: postContent,
+        createAt: Date.now(),
+        uid: loggedInUser,
+        userEmail: loggedInEmail,
+        //여기다가 이것저것 추가하면 될듯
+      });
+      setPostTitle(""); // Clear the title input after submission
+      setPostContent(""); // Clear the content input after submission
+      alert("글 작성에 성공하였습니다.")
+      navigate("/post");
+    } catch (error) {
+      alert("로그인에 실패했습니다. 이메일이나 비밀번호를 확인해주세요.");
+    }
   };
 
   return (

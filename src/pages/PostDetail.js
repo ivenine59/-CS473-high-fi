@@ -15,6 +15,20 @@ import { useNavigate } from "react-router";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Rating from "@mui/material/Rating";
+import { useEffect } from "react";
+import { fetchComments } from "../components/comment";
+import { useAuth } from "../AuthContext";
+import { addDoc, collection, doc } from "firebase/firestore";
+import { firestore } from "../firebase";
+
+
+const formatCreatedAt = (createdAt) => {
+  const date = new Date(createdAt);
+  return date.toLocaleString(); // 또는 다른 원하는 형식으로 포맷 가능
+};
+
+
+
 
 const CommentCard = ({ comment }) => {
   const [isRatingOpen, setIsRatingOpen] = useState(false);
@@ -54,20 +68,20 @@ const CommentCard = ({ comment }) => {
         <Grid justifyContent="left" item xs zeroMinWidth>
           <div style={{ display: "flex", alignItems: "center" }}>
             <h4 style={{ margin: 0, textAlign: "left", marginRight: 10 }}>
-              {comment.author}
+              {comment.userEmail}
             </h4>
             <Stack direction="row" spacing={1}>
               <Chip
-                label={comment.badgeLabel}
+                label={"diamond"}
                 size="small"
                 color="primary"
-                style={{ backgroundColor: comment.badgeColor }}
+                style={{ backgroundColor: "#834576" }}
               />
             </Stack>
           </div>
-          <p style={{ textAlign: "left" }}>{comment.content}</p>
+          <p style={{ textAlign: "left" }}>{comment.text}</p>
           <p style={{ textAlign: "left", color: "gray", fontSize: 12 }}>
-            {comment.timestamp}
+            Created At: {formatCreatedAt(comment.createAt)}
           </p>
           {isRatingOpen ? (
             <div
@@ -121,55 +135,47 @@ const imgLink =
 
 export default function PostDetail() {
   const { state } = useLocation(); //post id
+  const { loggedInUser, loggedInEmail } = useAuth();
   const [comment, setComment] = useState("");
-  const [comments, setComments] = useState([
-    {
-      id: 1,
-      author: "ander",
-      content: "Lorem ipsum dol",
-      timestamp: "1 minute ago",
-      badgeLabel: "diamond",
-      badgeColor: "#834576",
-    },
-    {
-      id: 2,
-      author: "Michel Michel",
-      content: "Lol~",
-      timestamp: "1 minute ago",
-      badgeLabel: "diamond",
-      badgeColor: "#834576",
-    },
-    {
-      id: 3,
-      author: "Michel Michel",
-      content: "don't do",
-      timestamp: "1 minute ago",
-      badgeLabel: "diamond",
-      badgeColor: "#834576",
-    },
-    // Add more comments as needed
-  ]);
+  const [comments, setComments] = useState([]);
 
   let navigate = useNavigate();
+
+  useEffect(() => {
+    fetchComments(state.id, setComments);
+    console.log(state)
+  }, []);
 
   const handleCommentChange = (event) => {
     setComment(event.target.value);
   };
 
-  const handleCommentSubmit = (event) => {
-    event.preventDefault();
-    // Add logic to handle the submitted comment, e.g., send to server
-    const newComment = {
-      id: comments.length + 1,
-      author: "Your Name", // Replace with the actual author
-      content: comment,
-      timestamp: "just now", // You can use a timestamp library for accurate timestamps
-      badgeLabel: "diamond", // You can customize the badge label
-      badgeColor: "#834576", // You can customize the badge color
-    };
-    setComments([...comments, newComment]);
-    setComment(""); // Clear the comment input after submission
-  };
+  //댓글 달기 함수
+  const handleCommentSubmit = async (postId, comment) => {
+    try {
+      const commentData = {
+        text: comment,
+        createAt: Date.now(),
+        uid: loggedInUser,
+        userEmail: loggedInEmail,
+      };
+
+      console.log(state.id)
+  
+      const postRef = doc(firestore, "Postings", state.id);
+      console.log(postRef);
+      const commentsRef = collection(postRef, "Comments");
+      console.log(commentsRef);
+      await addDoc(commentsRef, commentData);
+  
+      console.log("댓글이 성공적으로 게시되었습니다.");
+      alert("댓글이 작성되었습니다.")
+      fetchComments(state.id, setComments);
+      // setComment("");
+    } catch (error) {
+      console.log("댓글 게시 중 오류 발생:", error.message);
+    }
+  }
 
   const handleDelete = () => {
     // Add logic to delete the post (for example, show a confirmation dialog)
@@ -192,7 +198,7 @@ export default function PostDetail() {
         <Grid container justifyContent="space-between" alignItems="center">
           <Grid item>
             <h1 style={{ fontSize: 24, marginBottom: 10 }}>
-              Post Title {state.postId}
+              {state.title}
             </h1>
           </Grid>
           <Grid item>
@@ -209,8 +215,8 @@ export default function PostDetail() {
             </Button>
           </Grid>
         </Grid>
-        <p style={{ color: "gray", fontSize: 14 }}>Posted by: Michel Michel</p>
-        <p>여기는 포스트의 내용이 들어옵니다.</p>
+        <p style={{ color: "gray", fontSize: 14 }}>Posted by: {state.userEmail} | Created At: {formatCreatedAt(state.createAt)}</p>
+        <p>{state.text}</p>
       </Paper>
       {/* 댓글 영역 */}
       <h1 style={{ fontSize: 20, marginBottom: 10 }}>Comments</h1>{" "}
@@ -221,7 +227,7 @@ export default function PostDetail() {
       {/*댓글 작성 영역*/}
       <ThemeProvider theme={theme}>
         <Paper style={{ padding: "20px 10px", marginTop: 10 }}>
-          <form onSubmit={handleCommentSubmit}>
+          
             <TextField
               label="Write a comment"
               multiline
@@ -232,10 +238,10 @@ export default function PostDetail() {
               variant="outlined"
               style={{ marginBottom: 10 }}
             />
-            <Button type="submit" variant="contained" color="black">
+            <Button type="submit" variant="contained" color="black" onClick={()=> handleCommentSubmit()}>
               Submit Comment
             </Button>
-          </form>
+          
         </Paper>
       </ThemeProvider>
     </div>

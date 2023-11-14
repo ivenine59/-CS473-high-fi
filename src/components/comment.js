@@ -25,6 +25,7 @@ export const fetchComments = (postId, setComments) => {
         ...commentDoc.data(),
       }));
       setComments(commentsData);
+      console.log(commentsData)
     }
   );
 };
