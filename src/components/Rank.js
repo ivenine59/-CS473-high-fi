@@ -32,12 +32,17 @@ const RankUpdater = () => {
           });
 
           console.log(`Document ${doc.id}: Point successfully updated!`);
+        } catch (e) {
+          console.error(`Error updating document ${doc.id}: `, e);
+        }
+      });
+      querySnapshot.forEach(async (doc) => {
+        try {
+          const data = doc.data();
 
-          // rank 계산 (예시로 point를 기준으로 오름차순으로 정렬)
           const rankQuery = query(
             collection(firestore, "Accounts"),
-            orderBy("point", "desc"),
-            orderBy("num_rating", "desc")
+            orderBy("point", "desc")
           );
           const rankQuerySnapshot = await getDocs(rankQuery);
           const rank =
@@ -52,6 +57,30 @@ const RankUpdater = () => {
           });
 
           console.log(`Document ${doc.id}: Rank successfully updated!`);
+        } catch (e) {
+          console.error(`Error updating document ${doc.id}: `, e);
+        }
+      });
+      querySnapshot.forEach(async (doc) => {
+        try {
+          const data = doc.data();
+
+          const rank2Query = query(
+            collection(firestore, "Accounts"),
+            orderBy("num_rating", "desc")
+          );
+          const rank2QuerySnapshot = await getDocs(rank2Query);
+          const rank2 =
+            rank2QuerySnapshot.docs.findIndex(
+              (rank2Doc) => rank2Doc.id === doc.id
+            ) + 1;
+          // rank 업데이트
+          await updateDoc(doc.ref, {
+            rank2: rank2,
+            percent_rank2: rank2 / rank2QuerySnapshot.size,
+          });
+
+          console.log(`Document ${doc.id}: Rank2 successfully updated!`);
         } catch (e) {
           console.error(`Error updating document ${doc.id}: `, e);
         }
