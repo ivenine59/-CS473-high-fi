@@ -13,7 +13,7 @@ import PostCreate from "./pages/PostCreate";
 import MyPage from "./pages/MyPage";
 import LogIn from "./pages/Login";
 import SignUp from "./pages/SignUp";
-import AboutUs from "./components/AboutUs";
+import AboutUs from "./pages/AboutUs";
 import { AuthProvider } from "./AuthContext";
 
 function App() {
