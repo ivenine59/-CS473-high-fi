@@ -1,6 +1,4 @@
-# Project Title
-
-Healthy Discussion Room (HDR)
+# Healthy Discussion Room (HDR)
 
 ## Project Execution Steps
 
