@@ -46,7 +46,7 @@ const CommentCard = ({ comment, postId, uid, userEmail }) => {
   ];
   const badgeColors = [
     "#0F4C81",
-    "#8E8E8E",
+    "#0EC492",
     "#FFD700",
     "#B0C4DE",
     "#CD7F32",
@@ -110,7 +110,12 @@ const CommentCard = ({ comment, postId, uid, userEmail }) => {
     if (uid == null) {
       alert("로그인하지 않아 별점을 줄 수 없습니다.");
     } else {
-      setIsRatingOpen(true);
+      if(userEmail == comment.userEmail){
+        alert("자신의 댓글은 점수를 줄 수 없습니다.")
+      }else{
+        setIsRatingOpen(true);
+
+      }
     }
   };
 
