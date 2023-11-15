@@ -249,31 +249,36 @@ export default function PostDetail() {
 
   //댓글 달기 함수
   const handleCommentSubmit = async () => {
-    if (loggedInUser != null) {
-      try {
-        const commentData = {
-          text: comment,
-          createAt: Date.now(),
-          uid: loggedInUser,
-          userEmail: loggedInEmail,
-        };
-
-        console.log(state.id, commentData);
-
-        const postRef = doc(firestore, "Postings", state.id);
-        console.log(postRef);
-        const commentsRef = collection(postRef, "Comments");
-        console.log(commentsRef);
-        await addDoc(commentsRef, commentData);
-
-        console.log("댓글이 성공적으로 게시되었습니다.");
-        fetchComments(state.id, setComments);
-        setComment("");
-      } catch (error) {
-        console.log("댓글 게시 중 오류 발생:", error.message);
+    if(comment==""){
+      alert("댓글 내용을 입력해주세요.")
+    }else{
+      if (loggedInUser != null) {
+        try {
+          const commentData = {
+            text: comment,
+            createAt: Date.now(),
+            uid: loggedInUser,
+            userEmail: loggedInEmail,
+          };
+  
+          console.log(state.id, commentData);
+  
+          const postRef = doc(firestore, "Postings", state.id);
+          console.log(postRef);
+          const commentsRef = collection(postRef, "Comments");
+          console.log(commentsRef);
+          await addDoc(commentsRef, commentData);
+  
+          console.log("댓글이 성공적으로 게시되었습니다.");
+          fetchComments(state.id, setComments);
+          setComment("");
+        } catch (error) {
+          console.log("댓글 게시 중 오류 발생:", error.message);
+        }
+      } else {
+        alert("로그인하지 않으면 댓글을 적을 수 없습니다.");
       }
-    } else {
-      alert("로그인하지 않으면 댓글을 적을 수 없습니다.");
+      
     }
   };
 
