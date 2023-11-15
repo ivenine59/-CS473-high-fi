@@ -95,3 +95,4 @@ Contains design information for each webpage.
 ## Team Members
 
 - Jeongwon Kim ([GitHub Profile](https://github.com/ivenine59))
+- Jonghyeok Shin ([GitHub Profile](https://github.com/ShinJonghyeok))
