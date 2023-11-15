@@ -35,12 +35,12 @@ export default function AboutUs() {
         <CssBaseline />
         <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="sm">
           <Typography variant="h2" component="h1" gutterBottom>
-            We are HDR
+            We are BusanGuys
           </Typography>
-          <Typography variant="h5" component="h2" gutterBottom>
-            {'We support tier system for better discussion.'}
+          <Typography variant="h4" component="h2" gutterBottom>
+            {'who support rate system for better discussion.'}
           </Typography>
-          <Typography variant="body1">Try our platform</Typography>
+          <Typography variant="h6">Discussing online is difficult in today's internet-connected society due to lack of motivation and malicious behavior such as personal attacks. We introduce HDR, a discussion platform that enables active and focused discussion through a rating system evaluated by users. HDR stands out from other discussion platforms with its user-driven relative tier system, where the ratings given by fellow users directly impact the author's tier.</Typography>
         </Container>
         </Box>
     </ThemeProvider>
