@@ -16,7 +16,7 @@ function Header() {
         <Link to="/">Home</Link>
         <Link to="/about">About Us</Link>
         <Link to="/post">Discussion</Link>
-        <Link to="/mypage">My Page</Link>
+        {/* <Link to="/mypage">My Page</Link> */}
       </div>
       <div className="auth-buttons">
         {loggedInUser && loggedInEmail
