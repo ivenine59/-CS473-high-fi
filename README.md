@@ -1,6 +1,4 @@
-# Project Title
-
-Healthy Discussion Room (HDR)
+# Healthy Discussion Room (HDR)
 
 ## Project Execution Steps
 
@@ -94,5 +92,7 @@ Contains design information for each webpage.
 
 ## Team Members
 
-- Jeongwon Kim ([GitHub Profile](https://github.com/ivenine59))
+- Minhan Bae([GitHub Profile](https://github.com/ErdaNova))
 - Jonghyeok Shin ([GitHub Profile](https://github.com/ShinJonghyeok))
+- Jeongwon Kim ([GitHub Profile](https://github.com/ivenine59))
+

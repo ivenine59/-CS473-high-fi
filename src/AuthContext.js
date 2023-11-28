@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     // 페이지 로드 시 로컬 스토리지에서 로그인 정보를 가져옴
     const storedUser = localStorage.getItem("loggedInUser");
-    const storedEmail = localStorage.getItem("loggedInUser");
+    const storedEmail = localStorage.getItem("loggedInEmail");
     if (storedUser && storedEmail) {
       setLoggedInUser(JSON.parse(storedUser));
       setLoggedInEmail(JSON.parse(storedEmail));
