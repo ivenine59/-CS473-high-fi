@@ -155,22 +155,27 @@ const CommentCard = ({ comment, postId, uid, userEmail }) => {
         </Grid>
         <Grid justifyContent="left" item xs zeroMinWidth>
           <div style={{ display: "flex", alignItems: "center" }}>
-            <h4 style={{ margin: 0, textAlign: "left", marginRight: 10 }}>
+            <h4 style={{ margin: 0, textAlign: "left" }}>
               {comment.userEmail}
             </h4>
-            <Stack direction="row" spacing={1}>
+            <Stack direction="row" spacing={1} style={{alignItems:"center", marginLeft:10}}>
+
+
+              <h5 style={{ color:"#000" }}>( Reputation : </h5>
               <Chip
                 label={receivedTier}
                 size="small"
                 color="primary"
                 style={{ backgroundColor: receivedTierColor }}
               />
+              <h5 style={{ color:"#000" }}>Contribution : </h5>
               <Chip
                 label={deliverTier}
                 size="small"
                 color="primary"
                 style={{ backgroundColor: deliverTierColor }}
               />
+              <h5 style={{ color:"#000" }}> )</h5>
             </Stack>
           </div>
           <p style={{ textAlign: "left" }}>{comment.text}</p>
