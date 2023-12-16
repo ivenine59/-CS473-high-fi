@@ -103,18 +103,16 @@ const CommentCard = ({ comment, postId, uid, userEmail }) => {
       }
     }
     fetchRank();
-
   }, []);
 
   const handleRatingOpen = () => {
     if (uid == null) {
       alert("로그인하지 않아 별점을 줄 수 없습니다.");
     } else {
-      if(userEmail == comment.userEmail){
-        alert("자신의 댓글은 점수를 줄 수 없습니다.")
-      }else{
+      if (userEmail == comment.userEmail) {
+        alert("자신의 댓글은 점수를 줄 수 없습니다.");
+      } else {
         setIsRatingOpen(true);
-
       }
     }
   };
@@ -158,24 +156,26 @@ const CommentCard = ({ comment, postId, uid, userEmail }) => {
             <h4 style={{ margin: 0, textAlign: "left" }}>
               {comment.userEmail}
             </h4>
-            <Stack direction="row" spacing={1} style={{alignItems:"center", marginLeft:10}}>
-
-
-              <h5 style={{ color:"#000" }}>( Reputation : </h5>
+            <Stack
+              direction="row"
+              spacing={1}
+              style={{ alignItems: "center", marginLeft: 10 }}
+            >
+              <h5 style={{ color: "#000" }}>( Reputation : </h5>
               <Chip
                 label={receivedTier}
                 size="small"
                 color="primary"
                 style={{ backgroundColor: receivedTierColor }}
               />
-              <h5 style={{ color:"#000" }}>Contribution : </h5>
+              <h5 style={{ color: "#000" }}>Contribution : </h5>
               <Chip
                 label={deliverTier}
                 size="small"
                 color="primary"
                 style={{ backgroundColor: deliverTierColor }}
               />
-              <h5 style={{ color:"#000" }}> )</h5>
+              <h5 style={{ color: "#000" }}> )</h5>
             </Stack>
           </div>
           <p style={{ textAlign: "left" }}>{comment.text}</p>
@@ -254,9 +254,9 @@ export default function PostDetail() {
 
   //댓글 달기 함수
   const handleCommentSubmit = async () => {
-    if(comment==""){
-      alert("댓글 내용을 입력해주세요.")
-    }else{
+    if (comment == "") {
+      alert("댓글 내용을 입력해주세요.");
+    } else {
       if (loggedInUser != null) {
         try {
           const commentData = {
@@ -265,15 +265,15 @@ export default function PostDetail() {
             uid: loggedInUser,
             userEmail: loggedInEmail,
           };
-  
+
           console.log(state.id, commentData);
-  
+
           const postRef = doc(firestore, "Postings", state.id);
           console.log(postRef);
           const commentsRef = collection(postRef, "Comments");
           console.log(commentsRef);
           await addDoc(commentsRef, commentData);
-  
+
           console.log("댓글이 성공적으로 게시되었습니다.");
           fetchComments(state.id, setComments);
           setComment("");
@@ -283,7 +283,6 @@ export default function PostDetail() {
       } else {
         alert("로그인하지 않으면 댓글을 적을 수 없습니다.");
       }
-      
     }
   };
 
@@ -318,8 +317,8 @@ export default function PostDetail() {
             >
               <DeleteIcon />
             </Button> */}
-            <Button onClick={handleBack} variant="contained" color="primary">
-              <ArrowBackIcon />
+            <Button onClick={handleBack} style={{ backgroundColor: "#000" }}>
+              <ArrowBackIcon style={{ color: "#FFF" }} />
             </Button>
           </Grid>
         </Grid>

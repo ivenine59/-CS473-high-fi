@@ -25,7 +25,7 @@ export const fetchComments = (postId, setComments) => {
         ...commentDoc.data(),
       }));
       setComments(commentsData);
-      console.log(commentsData)
+      console.log(commentsData);
     }
   );
 };
@@ -182,11 +182,8 @@ export const postRating = async (postId, commentId, rating) => {
   }
 };
 
-
-
 export const postRate = async (postId, commentId, uid, userEmail, rating) => {
   try {
-
     if (!uid) {
       console.error("User not authenticated");
       return;
@@ -228,9 +225,11 @@ export const postRate = async (postId, commentId, uid, userEmail, rating) => {
       existingFlag = 1;
       await updateDoc(existingRatingDoc.ref, RatingData);
       console.log("별점이 성공적으로 업데이트되었습니다.");
+      alert("별점이 성공적으로 업데이트되었습니다.");
     } else {
       await addDoc(ratingsRef, RatingData);
       console.log("별점이 성공적으로 게시되었습니다.");
+      alert("별점이 성공적으로 게시되었습니다.");
     }
 
     const accountRef = collection(firestore, "Accounts");
@@ -243,7 +242,7 @@ export const postRate = async (postId, commentId, uid, userEmail, rating) => {
       where("userEmail", "==", authordata.userEmail)
     );
     const receiverSnapshot = await getDocs(receiverQuery);
-    console.log("part 1")
+    console.log("part 1");
 
     if (!accountSnapshot.docs.empty) {
       const accountDoc = accountSnapshot.docs[0];
@@ -268,7 +267,7 @@ export const postRate = async (postId, commentId, uid, userEmail, rating) => {
     } else {
       console.error("해당 이메일을 가진 사용자가 없습니다.");
     }
-    console.log("part 2")
+    console.log("part 2");
 
     if (!receiverSnapshot.docs.empty) {
       const receiverDoc = receiverSnapshot.docs[0];
@@ -291,7 +290,7 @@ export const postRate = async (postId, commentId, uid, userEmail, rating) => {
     } else {
       console.error("해당 이메일을 가진 사용자가 없습니다.");
     }
-    console.log("part 3")
+    console.log("part 3");
 
     // Perform necessary actions after comment submission
   } catch (error) {
